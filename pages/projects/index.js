@@ -9,14 +9,10 @@ export default function Projects({ projects }) {
       <div className="flex flex-col items-center justify-center min-h-screen px-5 mb-10">
         <Head>
           <title>projects</title>
-          <meta name="description" content="포트폴리오" />
+          <meta name="description" content="portfolio" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <h1 className="text-4xl font-bold sm:text-6xl">
-          총 프로젝트:
-          <span className="pl-4 text-blue-500">{projects?.results.length}</span>
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 m-6 py-10">
+        <div className="grid grid-cols-1 align-middle lg:grid-cols-4 md:grid-cols-2 p-10 m-4 gap-8 transition-opacity">
           {projects?.results.map((aProject) => (
             <ProjectItem key={aProject.id} data={aProject} />
           ))}
@@ -38,7 +34,7 @@ export async function getServerSideProps() {
     body: JSON.stringify({
       sorts: [
         {
-          property: "이름",
+          property: "Name",
           direction: "ascending",
         },
       ],
@@ -54,9 +50,8 @@ export async function getServerSideProps() {
   const projects = await res.json();
 
   const projectNames = projects.results.map(
-    (aProject) => aProject.properties.이름.title[0]?.plain_text
+    (aProject) => aProject.properties.Name.title[0]?.plain_text
   );
-  console.log(`projectNames : ${projectNames}`);
 
   return {
     props: { projects }, // will be passed to the page component as props
